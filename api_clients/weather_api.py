@@ -2,6 +2,9 @@ import statistics
 
 import requests
 from django.conf import settings
+from rest_framework import status
+from rest_framework.exceptions import ValidationError, APIException
+from rest_framework.response import Response
 
 
 class RequestMethods:
@@ -20,7 +23,7 @@ class WeatherApiClient:
         self.api_key = settings.WEATHER_API_KEY
         self.base_url = settings.WEATHER_API_BASE_URL
 
-    def execute(self, method: str, request_params: dict) -> dict:
+    def execute(self, method: str, request_params: dict) -> dict | APIException:
         """
         Executes the given request with provided parameters.
         """
@@ -34,6 +37,11 @@ class WeatherApiClient:
         # Ensure request was successful, otherwise raise a suitable exception
         if response.ok:
             return response.json()
+
+        if response.status_code == 400:
+            raise ValidationError(
+                detail={"detail": "Invalid request, please check your input parameters and try again."},
+            )
 
         raise WeatherApiClientException("There was a problem processing your request, please try again later.")
 

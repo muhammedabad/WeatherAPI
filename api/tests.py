@@ -84,3 +84,37 @@ class TestWeatherApiClient:
         # Make a call to the weather endpoint and store the response json
         with pytest.raises(WeatherApiClientException):
             client.get('/api/locations/centurion/?days=2')
+
+    @responses.activate
+    def test_weather_api_invalid_city(self, mock_centurion_weather_response):
+        """
+        Tests the API endpoint that processes data from weatherapi.com .
+        """
+
+        # Create mock response data for invalid city
+        weather_api_response = responses.Response(
+            method="GET",
+            url=f"{settings.WEATHER_API_BASE_URL}?q=foobar&days=2&key={settings.WEATHER_API_KEY}",
+            json={
+                "error": {
+                    "code": 1006,
+                    "message": "No matching location found."
+                }
+            },
+            status=400
+        )
+
+        # Register the response
+        responses.add(weather_api_response)
+
+        # Instantiate DRF test client
+        client = APIClient()
+
+        # Make a call to the weather endpoint and store the response json
+        response = client.get('/api/locations/foobar/?days=2')
+
+        # Ensure the response code is a 400
+        assert response.status_code == 400
+
+        # Ensure the message detail is correct
+        assert response.json().get("detail") == "Invalid request, please check your input parameters and try again."

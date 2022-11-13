@@ -27,6 +27,10 @@ This API fetches city temperature information from [weatherapi.com](https://weat
 **Unit Tests**
 - Run `make test`
 
+**Test Coverage Sample**
+
+![img_3.png](img_3.png)
+
 
 **Dependancies**
 - A valid [weatherapi.com](https://weatherapi.com) API key

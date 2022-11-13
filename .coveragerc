@@ -1,5 +1,4 @@
 [run]
-show_missing = true
 omit =
     */migrations/*
     *admin.py*
