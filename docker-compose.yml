@@ -1,0 +1,10 @@
+version: "3"
+services:
+  web:
+    restart: on-failure:10
+    build: .
+    command: ./run_dev.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
