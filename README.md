@@ -31,6 +31,9 @@ This API fetches city temperature information from [weatherapi.com](https://weat
 
 ![img_3.png](img_3.png)
 
+**Test File Location**
+- [api/tests.py](https://github.com/muhammedabad/weather_api/blob/main/api/tests.py)
+
 
 **Dependancies**
 - A valid [weatherapi.com](https://weatherapi.com) API key
