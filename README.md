@@ -4,7 +4,7 @@ This API fetches city temperature information from [weatherapi.com](https://weat
 
 ### Setup ###
 
-**Using Docker:**
+**Using Docker (Recommended):**
 
 ```make build dup```
 
